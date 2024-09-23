@@ -102,15 +102,15 @@ describe('getTodos()', () => {
     it("correctly calls api/todos with filter parameter 'owner'", () => {
       todoService.getTodos({ owner: 'Blanche' }).subscribe(todos => expect(todos).toBe(testTodos));
 
-      // Specify that (exactly) one request will be made to the specified URL with the owner parameter.
+
       const req = httpTestingController.expectOne(
         request => request.url.startsWith(todoService.todoUrl) && request.params.has('owner')
       );
 
-      // Check that the request made to that URL was a GET request.
+
       expect(req.request.method).toEqual('GET');
 
-      // Check that the age parameter was 'Blanche'
+
       expect(req.request.params.get('owner')).toEqual('Blanche');
 
       req.flush(testTodos);
@@ -118,21 +118,13 @@ describe('getTodos()', () => {
  });
     });
     describe('filterTodos()', () => {
-      /*
-       * Since `filterUsers` actually filters "locally" (in
-       * Angular instead of on the server), we do want to
-       * confirm that everything it returns has the desired
-       * properties. Since this doesn't make a call to the server,
-       * though, we don't have to use the mock HttpClient and
-       * all those complications.
-       */
+
       it('filters by owner', () => {
         const todoOwner = 'Fry';
         const filteredTodos = todoService.filterTodos(testTodos, { owner: todoOwner });
-        // There should be two users with an 'i' in their
-        // name: Chris and Jamie.
+
         expect(filteredTodos.length).toBe(2);
-        // Every returned user's name should contain an 'i'.
+
         filteredTodos.forEach(todo => {
           expect(todo.owner.indexOf(todoOwner)).toBeGreaterThanOrEqual(0);
         });
@@ -141,9 +133,9 @@ describe('getTodos()', () => {
       it('filters by category', () => {
         const todoCategory = 'homework';
         const filteredTodos = todoService.filterTodos(testTodos, { category: todoCategory });
-        // There should be just one user that has UMM as their company.
+
         expect(filteredTodos.length).toBe(1);
-        // Every returned user's company should contain 'UMM'.
+
         filteredTodos.forEach(todo => {
           expect(todo.category.indexOf(todoCategory)).toBeGreaterThanOrEqual(0);
   });
@@ -151,36 +143,24 @@ describe('getTodos()', () => {
 it('filters by body', () => {
   const todoBody = 'quis';
   const filteredTodos = todoService.filterTodos(testTodos, { body: todoBody });
-  // There should be just one user that has UMM as their company.
+
   expect(filteredTodos.length).toBe(1);
-  // Every returned user's company should contain 'UMM'.
+
   filteredTodos.forEach(todo => {
     expect(todo.body.indexOf(todoBody)).toBeGreaterThanOrEqual(0);
 });
 });
 it('should limit the number of todos based on the todoLimit input', () => {
-  const todoLimit = 2; // Set limit to 2
-  const filteredTodos = todoService.limitTodos(testTodos, todoLimit); // Apply limit
+  const todoLimit = 2;
+  const filteredTodos = todoService.limitTodos(testTodos, todoLimit);
 
-  // Ensure that the length of the filtered todos does not exceed the limit
+
   expect(filteredTodos.length).toBeLessThanOrEqual(todoLimit);
 });
 
 it('should throw an error if a negative limit number is provided', () => {
   expect(() => todoService.limitTodos(testTodos, -1)).toThrowError("Limit must be a non-negative number.");
 });
-
-
-// it('filters by status', () => {
-//   const todoStatus = 'false';
-//   const filteredTodos = todoService.filterTodos(testTodos, { status: todoStatus });
-//   // There should be just one user that has UMM as their company.
-//   expect(filteredTodos.length).toBe(1);
-//   // Every returned user's company should contain 'UMM'.
-//   filteredTodos.forEach(todo => {
-//     expect(todo.status.indexOf(todoStatus)).toBeGreaterThanOrEqual(0);
-// });
-// });
 });
 });
 

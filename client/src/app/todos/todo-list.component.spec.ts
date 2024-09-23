@@ -39,44 +39,27 @@ const COMMON_IMPORTS: unknown[] = [
 ];
 
 describe('TodoListComponent', () => {
-  // The `UserListComponent` being tested
+
   let todoList: TodoListComponent;
   let fixture: ComponentFixture<TodoListComponent>;
 
-  // Set up the `TestBed` so that it uses
-  // a `MockUserService` in place of the real `UserService`
-  // for the purposes of the testing. We also have to include
-  // the relevant imports and declarations so that the tests
-  // can find all the necessary parts.
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [COMMON_IMPORTS, TodoListComponent],
-      // providers:    [ UserService ]  // NO! Don't provide the real service!
-      // Provide a test-double instead
-      // This MockerUserService is defined in client/testing/user.service.mock.
+
       providers: [{ provide: TodoService, useValue: new MockTodoService() }],
     });
   });
 
-  // This constructs the `userList` (declared
-  // above) that will be used throughout the tests.
+
   beforeEach(waitForAsync(() => {
-    // Compile all the components in the test bed
-    // so that everything's ready to go.
+
     TestBed.compileComponents().then(() => {
-      /* Create a fixture of the UserListComponent. That
-       * allows us to get an instance of the component
-       * (userList, below) that we can control in
-       * the tests.
-       */
+
       fixture = TestBed.createComponent(TodoListComponent);
       todoList = fixture.componentInstance;
-      /* Tells Angular to sync the data bindings between
-       * the model and the DOM. This ensures, e.g., that the
-       * `userList` component actually requests the list
-       * of users from the `MockUserService` so that it's
-       * up to date before we start running tests on it.
-       */
+
       fixture.detectChanges();
     });
   }));
@@ -163,16 +146,7 @@ describe('TodoListComponent - Limit Functionality', () => {
     expect(filteredTodos.length).toBe(2);
   });
   });
-/*
- * This test is a little odd, but illustrates how we can use stubs
- * to create mock objects (a service in this case) that be used for
- * testing. Here we set up the mock UserService (userServiceStub) so that
- * _always_ fails (throws an exception) when you request a set of users.
- *
- * So this doesn't really test anything meaningful in the context of our
- * code (I certainly wouldn't copy it), but it does illustrate some nice
- * testing tools. Hopefully it's useful as an example in that regard.
- */
+
 describe('Misbehaving Todo List', () => {
  let todoList: TodoListComponent;
   let fixture: ComponentFixture<TodoListComponent>;
@@ -183,7 +157,7 @@ describe('Misbehaving Todo List', () => {
   };
 
   beforeEach(() => {
-    // stub UserService for test purposes
+
     todoServiceStub = {
       getTodos: () =>
         new Observable(observer => {
@@ -197,14 +171,12 @@ describe('Misbehaving Todo List', () => {
 
     TestBed.configureTestingModule({
       imports: [COMMON_IMPORTS, TodoListComponent],
-      // providers:    [ UserService ]  // NO! Don't provide the real service!
-      // Provide a test-double instead
+
       providers: [{ provide: TodoService, useValue: todoServiceStub }],
     });
   });
 
-  // Construct the `userList` used for the testing in the `it` statement
-  // below.
+
   beforeEach(waitForAsync(() => {
     TestBed.compileComponents().then(() => {
       fixture = TestBed.createComponent(TodoListComponent);
@@ -214,10 +186,7 @@ describe('Misbehaving Todo List', () => {
   }));
 
   it('fails to load todos if we do not set up a TodoListService', () => {
-    // Since calling both getUsers() and getUsersFiltered() return
-    // Observables that then throw exceptions, we don't expect the component
-    // to be able to get a list of users, and serverFilteredUsers should
-    // be undefined.
+
     expect(todoList.serverFilteredTodos());
   });
 });

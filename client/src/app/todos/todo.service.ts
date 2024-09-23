@@ -21,9 +21,7 @@ readonly todoUrl: string = environment.apiUrl + 'todos';
     let httpParams: HttpParams = new HttpParams();
     if (filters) {
 
-      // if (filters.status) {
-      //   httpParams = httpParams.set('status', filters.status); //unknown to string, is a boolean
-      // }
+
       if (filters.owner) {
         httpParams = httpParams.set('owner', filters.owner);
       }
