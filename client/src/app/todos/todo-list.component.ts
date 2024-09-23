@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Todo } from './todo';
 import { Subject, takeUntil } from 'rxjs';
@@ -69,9 +69,8 @@ import { MatIconModule } from '@angular/material/icon';
 
 export class TodoListComponent implements OnInit, OnDestroy {
   // These are public so that tests can reference them (.spec.ts)
-  readonly panelOpenState = signal(false);
-  public serverFilteredTodos: Todo[];
-  public filteredTodos: Todo[];
+  public serverFilteredTodos: WritableSignal<Todo[]> = signal([]);
+  public filteredTodos: WritableSignal<Todo[]> = signal([]);
 
   public todoOwner: string;
   public todoStatus: boolean;
@@ -105,20 +104,16 @@ export class TodoListComponent implements OnInit, OnDestroy {
   getTodosFromServer() {
     // A user-list-component is paying attention to userService.getUsers()
     // (which is an Observable<User[]>).
-    // (For more on Observable, see: https://reactivex.io/documentation/observable.html)
+    // (For more on Observable, see: https://reactivex) = .io/documentation/observable.html)
     this.todoService
-    .getTodos({
-        // Filter the users by the role and owner specified in the GUI
-        owner: this.todoOwner,
-        category: this.todoCategory,
-      })
+    .getTodos()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe({
         // Next time we see a change in the Observable<User[]>,
         // refer to that User[] as returnedUsers here and do the steps in the {}
         next: returnedTodos => {
           // First, update the array of serverFilteredUsers to be the User[] in the observable
-          this.serverFilteredTodos = returnedTodos;
+          this.serverFilteredTodos.set(returnedTodos);
           // Then update the filters for our client-side filtering as described in this method
           this.updateFilter();
         },
@@ -140,14 +135,14 @@ export class TodoListComponent implements OnInit, OnDestroy {
   public updateFilter() {
     console.log('Updating the filter; this.todoStatus = ' + this.todoStatus);
     console.log(typeof(this.todoStatus));
-    this.filteredTodos = this.todoService.filterTodos(this.serverFilteredTodos, {
+    this.filteredTodos.set(this.todoService.filterTodos(this.serverFilteredTodos(), {
       owner: this.todoOwner,
       body: this.todoBody,
       status: this.todoStatus,
       category: this.todoCategory,
-    });
+    }));
     if (this.todoLimit > 0) {
-      this.filteredTodos = this.todoService.limitTodos(this.filteredTodos, this.todoLimit);
+      this.filteredTodos.set(this.todoService.limitTodos(this.filteredTodos(), this.todoLimit));
   }
 
 }
