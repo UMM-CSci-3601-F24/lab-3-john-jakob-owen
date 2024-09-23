@@ -1,3 +1,4 @@
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/bRKLjZfx)
 # CSCI 3601 Lab #3 - Angular and Javalin Lab <!-- omit in toc -->
 
 - [Setup](#setup)
@@ -76,7 +77,7 @@ Before you start working you will need to install the dependencies for the clien
 > for you. Please let me know if if is or it isn't (e.g., whether you
 > see the red "ESLINT" on the bottom bar).
 
-Since this is the first time we will be using ESLint there is an additional step to make sure the VS Code extension is working in the project. When you first open a TypeScript file you will see at the bottom right that ESLint is disabled.
+Since this is the first time we will be using ESLint there is an additional step to make sure the VS Code extension is working in the project. When you first open a Script file you will see at the bottom right that ESLint is disabled.
 
 ![image](https://user-images.githubusercontent.com/1300395/107999308-bc59ec80-6fac-11eb-9784-75a471a50aa4.png)
 
@@ -188,7 +189,7 @@ preferred browser for testing. You can use any browser installed on
 your computer, but just sticking with "Electron" is probably the
 simplest.
 
-After you've chosen a brower, you should get a window with the
+After you've chosen a browser, you should get a window with the
 main Cypress view, which looks something like this:
 
 ![Cypress main window](images/cypress_main_window.png)

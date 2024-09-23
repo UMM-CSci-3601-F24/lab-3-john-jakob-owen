@@ -1,0 +1,110 @@
+<div class="flex-row">
+  <div class="flex-1" fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
+    <mat-card appearance="outlined" class="search-card">
+      <mat-card-title class="todo-list-title">Todos</mat-card-title>
+      <mat-card-content class="flex-col">
+        <div class="flex-row gap-10 flex-wrap">
+
+
+          <mat-form-field class="input-field">
+            <mat-label>Owner</mat-label>
+            <input
+              matInput
+              data-test="todoOwnerInput"
+              placeholder="Filter by owner"
+              [(ngModel)]="todoOwner"
+              (input)="updateFilter()"
+            />
+            <mat-hint>Filtered on client</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="input-field">
+            <mat-label>Body</mat-label>
+            <input
+              matInput
+              data-test="todoBodyInput"
+              placeholder="Filter by Body"
+              [(ngModel)]="todoBody"
+              (input)="updateFilter()"
+            />
+            <mat-hint>Filtered on client</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="input-field">
+            <mat-label>Category</mat-label>
+            <input
+              matInput
+              data-test="todoCategoryInput"
+              placeholder="Filter by Category"
+              [(ngModel)]="todoCategory"
+              (input)="updateFilter()"
+            />
+            <mat-hint>Filtered on client</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="input-field">
+            <mat-label>Limit</mat-label>
+            <input
+              matInput
+              data-test="todoLimitInput"
+              placeholder="Filter with Limit"
+              [(ngModel)]="todoLimit"
+              (input)="updateFilter()"
+            />
+            <mat-hint>Filtered on client</mat-hint>
+          </mat-form-field>
+
+        </div>
+
+        <div class="flex-row gap-10 flex-wrap">
+
+
+
+
+
+
+        </div>
+        <div class="flex-row gap-10 flex-wrap">
+          <mat-label for="status">Status: </mat-label>
+          <mat-radio-group aria-label="status" (change)="updateFilter()" [(ngModel)]="todoStatus" data-test="statusRadio">
+            <mat-radio-button id='statusNeither' [value]=undefined>Neither</mat-radio-button>
+            <mat-radio-button id='statusTrue' [value]="true">Complete</mat-radio-button>
+            <mat-radio-button id='statusFalse' [value]=!true>Incomplete</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <br />
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<div>
+<mat-accordion>
+<p>
+  <div class="todo-panels-container flex-row gap-10 flex-wrap">
+    <p>
+    @for (todo of filteredTodos(); track todo._id) {
+
+
+
+      <mat-expansion-panel class="todo-expansion-panel" (opened)="true" (closed)="false">
+        <mat-expansion-panel-header>
+          <mat-panel-title> {{todo.status ? 'Complete' : 'Incomplete'}}
+          </mat-panel-title>
+          <mat-panel-description>
+           {{ todo.category }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p class="todo-body"> Body: {{ todo.body }} </p>
+        <p class="todo-owner"> Owner: {{todo.owner}} </p>
+
+
+      </mat-expansion-panel>
+    }
+    </p>
+  </div>
+
+
+
+
+
