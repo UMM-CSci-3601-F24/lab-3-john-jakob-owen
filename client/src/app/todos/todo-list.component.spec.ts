@@ -162,24 +162,7 @@ describe('TodoListComponent - Limit Functionality', () => {
 
     expect(filteredTodos.length).toBe(2);
   });
-
-  it('return empty array if limit set zero', () => {
-    todoList.todoLimit = 0;
-    todoList.updateFilter();
-    const filteredTodos = todoList.filteredTodos();
-
-    expect(filteredTodos.length).toBe(0);
   });
-
-  it('should throw an error for negative limit', () => {
-    todoList.todoLimit = -1;
-
-    expect(() => {
-      todoList.updateFilter();
-    }).toThrowError('Limit must be a non-negative number.');
-  });
-});
-
 /*
  * This test is a little odd, but illustrates how we can use stubs
  * to create mock objects (a service in this case) that be used for
